@@ -125,7 +125,6 @@ def run_ga(
 ):
     """
     Run the Genetic Algorithm to maximise knapsack value.
-
     KEY PARAMETER
     -------------
     mutation_rate : probability of flipping each bit each generation
@@ -213,26 +212,72 @@ def save_plot(value_log, filename, title):
 
 if __name__ == "__main__":
 
+
     # ==========================================================================
-    # EXPERIMENT 1 - Baseline
-    # Run as-is. Do NOT change any parameters here.
+    # EXPERIMENT 2A - mutation_rate = 0.01
     # ==========================================================================
+
     print("=" * 48)
-    print("  EXPERIMENT 1 - Baseline")
+    print("  EXPERIMENT 2A - mutation_rate = 0.01")
     print("=" * 48)
 
-    best_chr, best_val, val_log = run_ga(
-        population_size=20, generations=50,
-        crossover_rate=0.8, mutation_rate=0.05,
-        tournament_size=3, seed=42
+    chr2, val2, vl2 = run_ga(
+    population_size=20, generations=50,
+    crossover_rate=0.8, mutation_rate=0.01,
+    tournament_size=3, seed=42
     )
-    print_solution(best_chr)
-    print(f"  Generations run : {len(val_log)}")
-    print(f"  Value at gen 1  : {val_log[0]}")
-    print(f"  Final best value: {best_val}")
-    save_plot(val_log, "plots/experiment_1.png",
-              "Baseline  mutation_rate=0.05")
 
+    print_solution(chr2)
+    print(f"  Generations: {len(vl2)}")
+    print(f"  Final best value: {val2}")
+    print(f"Weight: {sum(WEIGHTS[i] for i in range(NUM_ITEMS) if chr2[i]==1):.1f} kg")
+    print(f"Valid: {'Yes' if sum(WEIGHTS[i] for i in range(NUM_ITEMS) if chr2[i]==1) <= MAX_WEIGHT else 'No'}")
+    save_plot(vl2, "plots/experiment_2a.png", "mutation_rate=0.01")
+
+
+    # ==========================================================================
+    # EXPERIMENT 2B - mutation_rate = 0.05
+    # ==========================================================================
+
+    print("=" * 48)
+    print("  EXPERIMENT 2B - mutation_rate = 0.05")
+    print("=" * 48)
+
+    chr3, val3, vl3 = run_ga(
+    population_size=20, generations=50,
+    crossover_rate=0.8, mutation_rate=0.05,
+    tournament_size=3, seed=42
+    )
+
+    print_solution(chr3)
+    print(f"  Generations: {len(vl3)}")
+    print(f"  Final best value: {val3}")
+    print(f"Weight: {sum(WEIGHTS[i] for i in range(NUM_ITEMS) if chr3[i]==1):.1f} kg")
+    print(f"Valid: {'Yes' if sum(WEIGHTS[i] for i in range(NUM_ITEMS) if chr3[i]==1) <= MAX_WEIGHT else 'No'}")
+    save_plot(vl3, "plots/experiment_2b.png", "mutation_rate=0.05")
+
+
+
+    # ==========================================================================
+    # EXPERIMENT 2C - mutation_rate = 0.30
+    # ==========================================================================
+
+    print("=" * 48)
+    print("  EXPERIMENT 2C - mutation_rate = 0.30")
+    print("=" * 48)
+
+    chr4, val4, vl4 = run_ga(
+    population_size=20, generations=50,
+    crossover_rate=0.8, mutation_rate=0.30,
+    tournament_size=3, seed=42
+    )
+
+    print_solution(chr4)
+    print(f"  Generations: {len(vl4)}")
+    print(f"  Final best value: {val4}")
+    print(f"Weight: {sum(WEIGHTS[i] for i in range(NUM_ITEMS) if chr4[i]==1):.1f} kg")
+    print(f"Valid: {'Yes' if sum(WEIGHTS[i] for i in range(NUM_ITEMS) if chr4[i]==1) <= MAX_WEIGHT else 'No'}")
+    save_plot(vl4, "plots/experiment_2c.png", "mutation_rate=0.30")
     # ==========================================================================
     # EXPERIMENT 2 - Effect of Mutation Rate
     # TODO: Copy this block THREE times below (for 0.01, 0.05, and 0.30).
